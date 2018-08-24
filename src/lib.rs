@@ -178,6 +178,12 @@ macro_rules! impl_downcast {
                 Err(self)
             }
         }
+        #[inline]
+        pub fn downcast_unchecked<__T: $trait_<$($types)*>>(
+            self: ::std::boxed::Box<Self>
+        ) -> ::std::result::Result<::std::boxed::Box<__T>, ::std::boxed::Box<Self>> {
+            Ok($crate::Downcast::into_any(self).downcast::<__T>().unwrap())
+        }
         /// Returns a reference to the object within the trait object if it is of type `__T`, or
         /// `None` if it isn't.
         #[inline]
